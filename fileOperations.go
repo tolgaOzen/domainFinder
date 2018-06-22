@@ -20,9 +20,7 @@ func (fs filesScanner) HaydiScan() int {
 		if e == true {
 			scanCount++
 		}
-		//print(e)
-		//println(t)
-		//println(t)
+
 	}
 
 	return scanCount
@@ -45,8 +43,6 @@ func (fc FileCheckandScan) ExtensionControlAndScan(txtNames []string) []string {
 		b := fc.txtScanner(txtName)
 
 		for _, a := range b {
-			//fmt.Println("sasasasasassa",b)
-			//fmt.Println("iiiiiiii", a)
 
 			returnVal = append(returnVal, a)
 		}
@@ -74,7 +70,7 @@ func (fc FileCheckandScan) txtScanner(val string) []string {
 		a := strings.Split(b, " ")
 
 		for _, c := range a {
-			//fmt.Println("=======",c)
+
 			e := strings.TrimSpace(c)
 			if !strings.ContainsAny(e, "@?") && strings.ContainsAny(e, ".") && !strings.HasPrefix(e, ".") {
 				returnVal = append(returnVal, e)
@@ -82,14 +78,6 @@ func (fc FileCheckandScan) txtScanner(val string) []string {
 			}
 
 		}
-		// 👉🏻🤟🏻
-		// burada  ins.tx
-		//              domains.txtptbLustr,Users/tolgaozen/_GOPROJECT/src/domainFinder/
-		//   domains.txtptbNustr
-		//                     domains.txt
-		//                                 @? @ @ @
-		//                                         DSDB ` @ @ @      bunun cikmasini engelledim
-		//fmt.Println("bbbbbbb", b)
 
 	}
 	return returnVal

@@ -4,6 +4,8 @@ import (
 	"io/ioutil"
 	"fmt"
 	"os"
+	"time"
+	"strings"
 )
 
 type IoController struct {
@@ -29,20 +31,17 @@ func (io IoController) GetFolderList(val string) ([]string, error) {
 
 	return returnValue, err
 }
-func (io IoController) WriteFile(val string, row []string) {
+func (io IoController) WriteFile(val string, Domains []string) {
 
 	f, _ := os.OpenFile(val, os.O_APPEND|os.O_WRONLY, 0644)
 
-	for _, ttt := range row {
+	for _, Domain := range Domains {
 
-		f.WriteString(ttt + "\n")
+		f.WriteString(Domain + "\n")
 
 	}
 	defer f.Close()
 }
-
-
-
 
 // buraci dic create eder privatetir
 
@@ -54,7 +53,8 @@ func (io IoController) createDic(val int) {
 		os.MkdirAll(io.OutPut, os.ModePerm)
 	}
 }
-func (io IoController) testCreateFile(val string, lval string, nm string, ny []string) {
+
+func (io IoController) CreateFile(val string, lval string, nm string, ny []string) {
 	//	var returnVal bool
 
 	if val == "yes" || val == "" {
@@ -70,7 +70,7 @@ func (io IoController) testCreateFile(val string, lval string, nm string, ny []s
 		//returnVal = true
 
 	} else {
-		fmt.Println("lutfen " + lval + " folderiniza domainler yazan bir dosya yerlestiriniz")
+		fmt.Println("lutfen " + lval + " folderiniza domainlerin yazili oldugu bir dosya yerlestiriniz")
 		//returnVal = false
 	}
 	//return returnVal
@@ -95,12 +95,84 @@ func (io IoController) GetFolderListOrCreateFolder(val int) []string {
 
 	returnVal, err = io.GetFolderList(path)
 
-	//fmt.Println("========", returnVal)
-
 	if err != nil {
 
 		io.createDic(pathInt)
 	}
 	return returnVal
 
+}
+func CreateAndWriteDateFile(UygunDomains []string) {
+
+	var ty IoController
+	for i := 0; i < len(UygunDomains); i++ {
+
+		tn := time.Now()
+
+		a := tn.Format("01-02-2006")
+		// bu splitten daha iyi time konusunda iki kere cikmasinin sebebi iki kere donmesi
+
+		ty.CreateFile("yes", outputName, a+".txt", []string{"UYGUN DOMAINLER LISTESI (" + a + ")"})
+		ty.WriteFile(outputFolderPath+"/"+a+".txt", UygunDomains)
+
+	}
+
+}
+func PathOkLogContol() []string {
+
+	var returnval = []string{}
+
+	ioa := IoController{}
+	folderPathFiller()
+
+	FolderControl, _ := ioa.GetFolderList(inputFolderPath)
+
+	Foldercheck := 0
+
+	for _, inputcheck := range FolderControl {
+
+		if strings.HasPrefix(inputcheck, ".") {
+
+		} else {
+
+			Foldercheck++
+		}
+
+	}
+
+	//gopre.Pre(len(inputFolderControl) == 0)
+	if Foldercheck == 0 {
+		//burada input folder icerisine test dosyasi sorulacak
+		var answer string
+		fmt.Println("Input Folderinizda herhangi bir dosya yok ornek bir dosya olusturmamizi ister misiniz? ")
+		fmt.Scanln(&answer)
+		ioa.CreateFile(answer, inputName, "tester.txt", []string{"deneme.com", "deneme1.com", "deneme2.com", "ojnjkdjfidjfi.com"})
+
+	}
+
+	inputFolderControl2, _ := ioa.GetFolderList(inputFolderPath)
+
+	Foldercheck2 := 0
+
+	for _, inputcheck2 := range inputFolderControl2 {
+
+		if strings.HasPrefix(inputcheck2, ".") {
+
+		} else {
+
+			// en son haline bakilsin diye actim
+			//gopre.Pre(inputFolderPath)
+			// pathler var demek
+			//adam kullanmissa buradan devam ediyor
+			returnval = append(returnval, inputcheck2)
+			Foldercheck2++
+		}
+
+	}
+
+	virusScanProgram := filesScanner{inputFolderControl2[1:]}
+	virusScanProgram.HaydiScan()
+	// txt sayisi lazim olursa kullan
+
+	return returnval
 }
