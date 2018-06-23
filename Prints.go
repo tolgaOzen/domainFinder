@@ -11,6 +11,7 @@ type Figure string
 const (
 	OK       Figure = "✔︎"
 	TAKEN    Figure = "❌"
+	UNKNOWN  Figure = "🔵"
 	SPACENUM int    = 100
 )
 

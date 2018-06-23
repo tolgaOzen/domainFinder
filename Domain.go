@@ -13,6 +13,8 @@ const (
 	Name DomainExtension = "name"
 	Edu  DomainExtension = "edu"
 	Gov  DomainExtension = "gov"
+	Us   DomainExtension = "us"
+	In   DomainExtension = "in"
 )
 
 type Domain struct {
@@ -21,6 +23,7 @@ type Domain struct {
 }
 
 func (m DomainExtension) getSearhText() string {
+
 	return ExtensionResultTexts[m].searchResultWord
 }
 
@@ -35,6 +38,8 @@ var ExtensionResultTexts = map[DomainExtension]Domain{
 	Name: Domain{Name, "No match for"},
 	Edu:  Domain{Edu, "NO MATCH"},
 	Gov:  Domain{Gov, "No match for"},
+	Us:   Domain{Us, "No Data Found"},
+	In: Domain{In,"NOT FOUND"},
 }
 
 //var ExtensionResultTextsTest = map[string]string{
