@@ -8,13 +8,13 @@ import (
 	"github.com/ugurethemaydin/gopre/src/gopre"
 )
 
-
-
 type whoisServer struct {
 	arg       string
 	errorPool error
 }
+type returnStatus struct {
 
+}
 func (WhoisServer whoisServer) exists(domain string) (int, error) {
 	WhoisServer.arg = domain
 
@@ -34,6 +34,9 @@ func (WhoisServer whoisServer) exists(domain string) (int, error) {
 		return 3, nil
 
 	}
+
+
+
 
 
 	var whoisServer string = currentExtension + ".whois-servers.net"

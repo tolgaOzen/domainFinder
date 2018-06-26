@@ -11,9 +11,11 @@ import (
 	"github.com/ugurethemaydin/gopre/src/gopre"
 	"bytes"
 	"encoding/gob"
+	"fmt"
+	"reflect"
 )
 
-type people struct {
+type demoStuct struct {
 	Number  int    `json:"number"`
 	Message string `json:"message"`
 }
@@ -21,7 +23,16 @@ type JsonOperation struct {
 	downloadedJsonFileURL string
 	convertedJsonFile     interface{}
 }
+func yazdir(t interface{}) {
+	switch reflect.TypeOf(t).Kind() {
+	case reflect.Slice:
+		s := reflect.ValueOf(t)
 
+		for i := 0; i < s.Len(); i++ {
+			fmt.Println(s.Index(i))
+		}
+	}
+}
 func init() {
 	jsonOpe := JsonOperation{}
 
@@ -29,10 +40,14 @@ func init() {
 	//jsonOpe.setDownloadedJsonFileURL("https://raw.githubusercontent.com/weppos/whois/master/data/tld.json")
 	returnByte := jsonOpe.getFileToInternet()
 
-	jsonObj := jsonOpe.getJson(returnByte, people{})
+	jsonObj := jsonOpe.getJson(returnByte, demoStuct{})
 	_ = jsonOpe.getJsonStruct()
+	yazdir(jsonObj["people"])
 	//gopre.Pre(ret)
-	gopre.Pre(jsonObj)
+	//for a, x := range  {
+	//	fmt.Println(a, x)
+	//}
+	//gopre.Pre(jsonObj["people"])
 	//
 	//spaceClient := http.Client{
 	//	Timeout: time.Second * 2, // Maximum of 2 secs
@@ -112,13 +127,19 @@ func (operation *JsonOperation) getFileToInternet(url ... string) []byte {
 
 	httpResponse, getErr := httpOperation.Do(httpRequest)
 	if getErr != nil {
-		log.Fatal("URL eklenmemis \n",getErr)
+		log.Fatal("URL eklenmemis \n", getErr)
 	}
 
 	body, readErr := ioutil.ReadAll(httpResponse.Body)
 	if readErr != nil {
-		//log.Fatal(readErr)
+		log.Fatal(readErr)
 	}
+
+	io := IoController{}
+	io.setFolderPath("downloaded")
+	io.setFileName("astros.json")
+	io.openLogFile(false)
+	io.appendByte(body)
 
 	return body
 }

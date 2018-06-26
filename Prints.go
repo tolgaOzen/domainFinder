@@ -18,6 +18,17 @@ const (
 //var marks = map[bool]string{
 //	true: "✔︎", false: "❌" ,
 //}
+func (fig Figure) convert() string {
+	switch fig {
+	case OK:
+		return "SUCCESS"
+	case TAKEN:
+		return "ERROR"
+	default:
+		return fmt.Sprintf("%d", string(fig))
+	}
+	return "bnabuyon"
+}
 
 type Write struct {
 	figure Figure

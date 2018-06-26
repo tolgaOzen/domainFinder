@@ -9,7 +9,7 @@ type DomainQuest struct {
 	count   int
 }
 
-func (dm DomainQuest) domainQueryAndWrite()  {
+func (dm DomainQuest) domainQueryAndWrite() {
 	//var OkDomains = []string{}
 	//var unregisteredExtensions = []string{}
 	//
@@ -17,31 +17,37 @@ func (dm DomainQuest) domainQueryAndWrite()  {
 	//iterm := terminal{Whois, "gitarist.com"}
 	//iterm := Terminal{}
 	whServer := whoisServer{}
+	io := IoController{}
+	io.setFolderPath("./log/")
+	io.openLogFile(true)
 
 	for _, domain := range dm.domains {
-
 		//var marks = map[bool]string{true: "◯ ", false: "☓"}
 		exist, err := whServer.exists(domain)
+
 		if err != nil {
 			log.Fatalln(err)
 		}
 		//fmt.Println(marks[exist])
 		//time.Sleep(1 * time.Second)
-		io := IoController{}
+
 		if len(domain) <= dm.count {
 
 			if exist == 1 {
 				//iterm.Ping(domain)
 				DomainWrite := Write{OK}
 				DomainWrite.spaceWrite(domain)
+
+				io.log(domain, OK)
 				//OkDomains = append(OkDomains, domain)
-				io.CreateAndWriteDateFile(domain)
+				//io.CreateAndWriteDateFile(domain)
 				//deferla dosyayi kapatman lazim
 
 			} else if exist == 2 {
 				//gopre.Pre(iterm.errorPool)
 				DomainWrite := Write{TAKEN}
 				DomainWrite.spaceWrite(domain)
+
 				//domain dolu
 			} else {
 				DomainWrite := Write{UNKNOWN}
@@ -75,6 +81,5 @@ func (dm DomainQuest) domainQueryAndWrite()  {
 		//	}
 		//}
 	}
-
 
 }
