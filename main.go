@@ -9,6 +9,7 @@ var outputFolderPath string
 var standartPath string
 
 func main() {
+<<<<<<< HEAD
 
 	//r, _ := IoController{}.GetFolderList(inputFolderPath)
 	//IoController{}.WriteFile("hebele")
@@ -19,6 +20,8 @@ func main() {
 	//	io.appendFile("asdasdsdasdasdasd\n")
 	//}
 
+=======
+>>>>>>> master
 	flagInitialize()
 
 	returnIsFolder := checkInputOutputFolder()
