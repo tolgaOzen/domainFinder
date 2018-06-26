@@ -39,7 +39,7 @@ var ExtensionResultTexts = map[DomainExtension]Domain{
 	Edu:  Domain{Edu, "NO MATCH"},
 	Gov:  Domain{Gov, "No match for"},
 	Us:   Domain{Us, "No Data Found"},
-	In: Domain{In,"NOT FOUND"},
+	In:   Domain{In, "NOT FOUND"},
 }
 
 //var ExtensionResultTextsTest = map[string]string{

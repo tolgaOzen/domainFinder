@@ -9,8 +9,25 @@ import (
 )
 
 type IoController struct {
-	InPut  string
-	OutPut string
+	InPut       string
+	OutPut      string
+	filePath    string
+	openFile    *os.File
+	openFileErr error
+}
+
+func (io *IoController) setFilePath(filePath string) {
+	var newPath string = filePath
+	io.openFile, io.openFileErr = os.OpenFile(newPath, os.O_APPEND|os.O_WRONLY, 0644)
+
+}
+
+func (io IoController) appendFile(val string) {
+	io.openFile.WriteString(val)
+	if io.openFile == nil {
+		fmt.Print("setFilePathle io.openFile i doldurmalisin")
+	}
+
 }
 
 func (io IoController) GetFolderList(val string) ([]string, error) {
@@ -31,17 +48,7 @@ func (io IoController) GetFolderList(val string) ([]string, error) {
 
 	return returnValue, err
 }
-func (io IoController) WriteFile(val string, Domains []string) {
 
-	f, _ := os.OpenFile(val, os.O_APPEND|os.O_WRONLY, 0644)
-
-	for _, Domain := range Domains {
-
-		f.WriteString(Domain + "\n")
-
-	}
-	defer f.Close()
-}
 
 // buraci dic create eder privatetir
 
@@ -54,7 +61,7 @@ func (io IoController) createDic(val int) {
 	}
 }
 
-func (io IoController) CreateFile(val string, lval string, nm string, ny []string) {
+func (io IoController) CreateTestFile(val string, lval string, nm string, ny string) {
 	//	var returnVal bool
 
 	if val == "yes" || val == "" {
@@ -65,7 +72,8 @@ func (io IoController) CreateFile(val string, lval string, nm string, ny []strin
 		}
 		defer file.Close()
 
-		io.WriteFile("./"+lval+"/"+nm, ny)
+		io.setFilePath("./" + lval + "/" + nm)
+		io.appendFile(ny)
 
 		//returnVal = true
 
@@ -102,20 +110,33 @@ func (io IoController) GetFolderListOrCreateFolder(val int) []string {
 	return returnVal
 
 }
-func CreateAndWriteDateFile(UygunDomains []string) {
+func (ty IoController) CreateAndWriteDateFile(Domain string) {
+	t, _ := ty.GetFolderList(outputFolderPath)
 
-	var ty IoController
-	for i := 0; i < len(UygunDomains); i++ {
+	//for i := 0; i < len(UygunDomains); i++ {
 
-		tn := time.Now()
+	tn := time.Now()
 
-		a := tn.Format("01-02-2006")
+	a := tn.Format("01-02-2006")
+
+	var DateFolderName = a + ".txt"
+	for _, y := range t {
+
 		// bu splitten daha iyi time konusunda iki kere cikmasinin sebebi iki kere donmesi
+		if y == DateFolderName {
 
-		ty.CreateFile("yes", outputName, a+".txt", []string{"UYGUN DOMAINLER LISTESI (" + a + ")"})
-		ty.WriteFile(outputFolderPath+"/"+a+".txt", UygunDomains)
+			ty.setFilePath("./output/" + DateFolderName)
+			ty.appendFile(Domain)
 
+		} else {
+			os.Create("./output/" + DateFolderName)
+			//ty.setFilePath("./output/" + DateFolderName)
+			//ty.appendFile(Domain)
+
+		}
 	}
+
+	//}
 
 }
 func PathOkLogContol() []string {
@@ -146,7 +167,7 @@ func PathOkLogContol() []string {
 		var answer string
 		fmt.Println("Input Folderinizda herhangi bir dosya yok ornek bir dosya olusturmamizi ister misiniz? ")
 		fmt.Scanln(&answer)
-		ioa.CreateFile(answer, inputName, "tester.txt", []string{"deneme.com", "deneme1.com", "deneme2.com", "ojnjkdjfidjfi.com"})
+		ioa.CreateTestFile(answer, inputName, "tester.txt", "deneme.com\n"+"deneme1.com\n"+"deneme2.com\n"+"ojnjkdjfidjfi.com\n")
 
 	}
 
@@ -170,8 +191,8 @@ func PathOkLogContol() []string {
 
 	}
 
-	virusScanProgram := filesScanner{inputFolderControl2[1:]}
-	virusScanProgram.HaydiScan()
+	//virusScanProgram := filesScanner{inputFolderControl2[1:]}
+	//virusScanProgram.HaydiScan()
 	// txt sayisi lazim olursa kullan
 
 	return returnval

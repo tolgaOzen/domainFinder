@@ -8,9 +8,17 @@ var inputFolderPath string
 var outputFolderPath string
 var standartPath string
 
-
-
 func main() {
+
+	//r, _ := IoController{}.GetFolderList(inputFolderPath)
+	//IoController{}.WriteFile("hebele")
+	//gopre.Pre(r)
+	//io := IoController{}
+	//io.setFilePath("tolga.txt")
+	//for i := 0; i < 100; i++ {
+	//	io.appendFile("asdasdsdasdasdasd\n")
+	//}
+
 	flagInitialize()
 
 	returnIsFolder := checkInputOutputFolder()
