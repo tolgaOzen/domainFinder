@@ -8,8 +8,6 @@ var inputFolderPath string
 var outputFolderPath string
 var standartPath string
 
-
-
 func main() {
 	flagInitialize()
 
