@@ -9,8 +9,9 @@ type DomainQuest struct {
 	count   int
 }
 
-func (dm DomainQuest) domainQueryAndWrite() []string {
-	var returnVal = []string{}
+func (dm DomainQuest) domainQueryAndWrite()  {
+	//var OkDomains = []string{}
+	//var unregisteredExtensions = []string{}
 	//
 	//var val = []string{}
 	//iterm := terminal{Whois, "gitarist.com"}
@@ -26,14 +27,16 @@ func (dm DomainQuest) domainQueryAndWrite() []string {
 		}
 		//fmt.Println(marks[exist])
 		//time.Sleep(1 * time.Second)
+		io := IoController{}
 		if len(domain) <= dm.count {
 
 			if exist == 1 {
 				//iterm.Ping(domain)
 				DomainWrite := Write{OK}
 				DomainWrite.spaceWrite(domain)
-				returnVal = append(returnVal, domain)
-				CreateAndWriteDateFile(returnVal)
+				//OkDomains = append(OkDomains, domain)
+				io.CreateAndWriteDateFile(domain)
+				//deferla dosyayi kapatman lazim
 
 			} else if exist == 2 {
 				//gopre.Pre(iterm.errorPool)
@@ -43,7 +46,12 @@ func (dm DomainQuest) domainQueryAndWrite() []string {
 			} else {
 				DomainWrite := Write{UNKNOWN}
 				DomainWrite.spaceWrite(domain)
-				// cok uzun domain olunca yazdiramiyo kontrol et
+
+				//io := IoController{}
+				//io.CreateFile("yes", outputName, "unregisteredExtension.txt", []string{"unregistered extensions"})
+				//unregisteredExtensions = append(unregisteredExtensions,domain)
+				//io.WriteFile(outputFolderPath+"/"+"unregisteredExtension.txt",unregisteredExtensions)
+				// cok uzun domain olunca yazdiramiyo ama unregistered extension: yaziyo onceden ariyo cunku duzelt hatayi
 			}
 
 		}
@@ -68,5 +76,5 @@ func (dm DomainQuest) domainQueryAndWrite() []string {
 		//}
 	}
 
-	return returnVal
+
 }

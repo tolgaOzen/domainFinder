@@ -8,6 +8,8 @@ import (
 	"github.com/ugurethemaydin/gopre/src/gopre"
 )
 
+
+
 type whoisServer struct {
 	arg       string
 	errorPool error
@@ -26,13 +28,16 @@ func (WhoisServer whoisServer) exists(domain string) (int, error) {
 	ExtensionSearchWords := DomainExtension(currentExtension).getSearhText()
 
 	if ExtensionSearchWords == "" {
-		fmt.Print("unregistered extension: ", argument[1]+" ")
+
+		//fmt.Print("unregistered extension: ", argument[1]+" ")
 		//ExtensionSearchWords = "NOT"
 		return 3, nil
 
 	}
 
+
 	var whoisServer string = currentExtension + ".whois-servers.net"
+
 	conn, err := net.Dial("tcp", whoisServer+":43")
 	if err != nil {
 		gopre.Pre(WhoisServer.errorPool)

@@ -7,24 +7,24 @@ import (
 	"bufio"
 )
 
-type filesScanner struct {
-	folderList []string
-}
+//type filesScanner struct {
+//	folderList []string
+//}
 
-func (fs filesScanner) HaydiScan() int {
-	var scanCount = 0
-
-	for _, scanRow := range fs.folderList {
-		t := strings.TrimSpace(scanRow)
-		e := strings.HasSuffix(t, ".txt")
-		if e == true {
-			scanCount++
-		}
-
-	}
-
-	return scanCount
-}
+//func (fs filesScanner) HaydiScan() int {
+//	var scanCount = 0
+//
+//	for _, scanRow := range fs.folderList {
+//		t := strings.TrimSpace(scanRow)
+//		e := strings.HasSuffix(t, ".txt")
+//		if e == true {
+//			scanCount++
+//		}
+//
+//	}
+//
+//	return scanCount
+//}
 
 type FileCheckandScan struct {
 	//extension strings
