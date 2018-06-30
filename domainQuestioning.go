@@ -18,20 +18,22 @@ func (dm DomainQuest) domainQueryAndWrite() {
 	//iterm := Terminal{}
 	whServer := whoisServer{}
 	io := IoController{}
-	io.setFolderPath("./log/")
+	io.setFolderPath(outputFolderPath+"/")
 	io.openLogFile(true)
 
 	for _, domain := range dm.domains {
 		//var marks = map[bool]string{true: "◯ ", false: "☓"}
-		exist, err := whServer.exists(domain)
 
-		if err != nil {
-			log.Fatalln(err)
-		}
+
 		//fmt.Println(marks[exist])
 		//time.Sleep(1 * time.Second)
 
 		if len(domain) <= dm.count {
+
+			exist, err := whServer.exists(domain)
+			if err != nil {
+				log.Fatalln(err)
+			}
 
 			if exist == 1 {
 				//iterm.Ping(domain)
@@ -49,7 +51,7 @@ func (dm DomainQuest) domainQueryAndWrite() {
 				DomainWrite.spaceWrite(domain)
 
 				//domain dolu
-			} else {
+			} else if exist == 3{
 				DomainWrite := Write{UNKNOWN}
 				DomainWrite.spaceWrite(domain)
 
@@ -58,7 +60,9 @@ func (dm DomainQuest) domainQueryAndWrite() {
 				//unregisteredExtensions = append(unregisteredExtensions,domain)
 				//io.WriteFile(outputFolderPath+"/"+"unregisteredExtension.txt",unregisteredExtensions)
 				// cok uzun domain olunca yazdiramiyo ama unregistered extension: yaziyo onceden ariyo cunku duzelt hatayi
-			}
+			} //else if exist == 5 {
+
+
 
 		}
 

@@ -18,6 +18,10 @@ type IoController struct {
 	fileName    string
 }
 
+const (
+	sleep = time.Second * 5
+)
+
 //ugur
 
 func (io *IoController) log(val string, figure Figure) {
@@ -49,7 +53,7 @@ func (io *IoController) openLogFile(autoGenerateToDate bool) {
 		filePath = io.folderName
 	}
 
-	isCreated := io.createDirectory(filePath)
+	io.createDirectory(filePath)
 
 	var fileName string
 	if autoGenerateToDate {
@@ -69,11 +73,11 @@ func (io *IoController) openLogFile(autoGenerateToDate bool) {
 	//gopre.Pre(newPath)
 	io.openFile, io.openFileErr = os.OpenFile(newPath, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	//gopre.Pre(newPath)
-	if isCreated {
-
-	} else {
-		//as;dlkasdl;kas;dlkasd
-	}
+	//if isCreated {
+	//
+	//} else {
+	//	//as;dlkasdl;kas;dlkasd
+	//}
 
 }
 func (io *IoController) createDirectory(directoryName string) bool {
@@ -128,29 +132,38 @@ func (io IoController) createDic(val int) {
 
 	if val == 1 {
 		os.MkdirAll(io.InPut, os.ModePerm)
+		//gopre.Pre(io.InPut)
 	} else {
 		os.MkdirAll(io.OutPut, os.ModePerm)
 	}
 }
 
-func (io IoController) CreateTestFile(val string, lval string, nm string, ny string) {
+func (io IoController) CreateTestFile(val string, folderName string, fileName string, testerDomain string) {
 	//	var returnVal bool
 
 	if val == "yes" || val == "" {
 
-		var file, err = os.Create("./" + lval + "/" + nm)
+		var file, err = os.Create(standartPath + "/" + folderName + "/" + fileName)
 		if err != nil {
-			fmt.Println("Dosya Olusturulamadi...")
+			fmt.Println("Path hatali yeniden deneyin")
+			//gopre.Pre(standartPath)
+			os.Exit(1)
 		}
 		defer file.Close()
 
-		io.setFilePath("./" + lval + "/" + nm)
-		io.appendFile(ny)
+		io.setFilePath(standartPath + "/" + folderName + "/" + fileName)
+		io.appendFile(testerDomain)
 
 		//returnVal = true
 
 	} else {
-		fmt.Println("lutfen " + lval + " folderiniza domainlerin yazili oldugu bir dosya yerlestiriniz")
+		fmt.Println("lutfen " + folderName + " folderiniza domainlerin yazili oldugu bir dosya yerlestiriniz")
+
+		time.Sleep(sleep)
+
+		PathOkLogContol()
+
+		fmt.Println("tesekkurler... tarama basliyor")
 		//returnVal = false
 	}
 	//return returnVal
@@ -183,40 +196,12 @@ func (io IoController) GetFolderListOrCreateFolder(val int) []string {
 
 }
 
-func (ty IoController) CreateAndWriteDateFile(Domain string) {
-	t, _ := ty.GetFolderList(outputFolderPath)
-
-	//for i := 0; i < len(UygunDomains); i++ {
-
-	tn := time.Now()
-
-	a := tn.Format("01-02-2006")
-
-	var DateFolderName = a + ".txt"
-	for _, y := range t {
-
-		// bu splitten daha iyi time konusunda iki kere cikmasinin sebebi iki kere donmesi
-		if y == DateFolderName {
-
-			ty.setFilePath("./output/" + DateFolderName)
-			ty.appendFile(Domain)
-
-		} else {
-			os.Create("./output/" + DateFolderName)
-			//ty.setFilePath("./output/" + DateFolderName)
-			//ty.appendFile(Domain)
-
-		}
-	}
-
-	//}
-
-}
 func PathOkLogContol() []string {
 
 	var returnval = []string{}
 
 	ioa := IoController{}
+
 	folderPathFiller()
 
 	FolderControl, _ := ioa.GetFolderList(inputFolderPath)
@@ -240,7 +225,7 @@ func PathOkLogContol() []string {
 		var answer string
 		fmt.Println("Input Folderinizda herhangi bir dosya yok ornek bir dosya olusturmamizi ister misiniz? ")
 		fmt.Scanln(&answer)
-		ioa.CreateTestFile(answer, inputName, "tester.txt", "deneme.com\n"+"deneme1.com\n"+"deneme2.com\n"+"ojnjkdjfidjfi.com\n")
+		ioa.CreateTestFile(answer, inputName, "tester.txt", "deneme.com\n"+"deneme1.com\n"+"deneme2.com\n")
 
 	}
 

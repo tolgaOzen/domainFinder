@@ -15,6 +15,7 @@ const (
 	Gov  DomainExtension = "gov"
 	Us   DomainExtension = "us"
 	In   DomainExtension = "in"
+	//Xyz DomainExtension = "xyz"
 )
 
 type Domain struct {
@@ -40,6 +41,7 @@ var ExtensionResultTexts = map[DomainExtension]Domain{
 	Gov:  Domain{Gov, "No match for"},
 	Us:   Domain{Us, "No Data Found"},
 	In:   Domain{In, "NOT FOUND"},
+	//Xyz: Domain{Xyz,"DOMAIN NOT FOUND"},
 }
 
 //var ExtensionResultTextsTest = map[string]string{

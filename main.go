@@ -15,7 +15,7 @@ func main() {
 	returnIsFolder := checkInputOutputFolder()
 	//fmt.Println(returnIsFolder)
 	if returnIsFolder == true {
-		//fmt.Println("Tekrar Hosgeldiniz")
+		fmt.Println("Tekrar Hosgeldiniz")
 		//folderPathFiller()
 		//PathlerVarInputtaKacTxtvar()
 		//hasTxt :=
@@ -42,7 +42,7 @@ func main() {
 	fc := FileCheckandScan{inputFolderPath}
 	domains := fc.ExtensionControlAndScan(inputLogNameArray)
 
-	if CountVal != 50 {
+	if CountVal == 50 {
 		fmt.Println("bir Count belirleyiniz:")
 		fmt.Scanln(&CountVal)
 

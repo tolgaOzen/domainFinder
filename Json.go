@@ -11,80 +11,78 @@ import (
 	"github.com/ugurethemaydin/gopre/src/gopre"
 	"bytes"
 	"encoding/gob"
-	"fmt"
-	"reflect"
 )
 
 type demoStuct struct {
-	Number  int    `json:"number"`
-	Message string `json:"message"`
+	//Number  int    `json:"number"`
+	Message string `json:"host"`
 }
 type JsonOperation struct {
 	downloadedJsonFileURL string
 	convertedJsonFile     interface{}
 }
-func yazdir(t interface{}) {
-	switch reflect.TypeOf(t).Kind() {
-	case reflect.Slice:
-		s := reflect.ValueOf(t)
 
-		for i := 0; i < s.Len(); i++ {
-			fmt.Println(s.Index(i))
-		}
-	}
-}
-func init() {
-	jsonOpe := JsonOperation{}
+//func yazdir(t interface{})  string  {
+//	//val := reflect.TypeOf(t)
+//	return .Message
+//}
 
-	jsonOpe.setDownloadedJsonFileURL("http://api.open-notify.org/astros.json")
-	//jsonOpe.setDownloadedJsonFileURL("https://raw.githubusercontent.com/weppos/whois/master/data/tld.json")
-	returnByte := jsonOpe.getFileToInternet()
+//
+//func inito() {	//jsonOpe := JsonOperation{}
+//
+////jsonOpe.setDownloadedJsonFileURL("http://api.open-notify.org/astros.json")
+//jsonOpe.setDownloadedJsonFileURL("https://raw.githubusercontent.com/weppos/whois/master/data/tld.json")
+//returnByte := jsonOpe.getFileToInternet()
+//
+//jsonObj := jsonOpe.getJson(returnByte, demoStuct{})
+//_ = jsonOpe.getJsonStruct()
+//jsonObj["host"] = string("")
+////yazdir(jsonObj["com"])
+//gopre.Pre(jsonObj["com"])
+//for a, x := range  {
+//	fmt.Println(a, x)
+//}
+//gopre.Pre(jsonObj["people"])
 
-	jsonObj := jsonOpe.getJson(returnByte, demoStuct{})
-	_ = jsonOpe.getJsonStruct()
-	yazdir(jsonObj["people"])
-	//gopre.Pre(ret)
-	//for a, x := range  {
-	//	fmt.Println(a, x)
-	//}
-	//gopre.Pre(jsonObj["people"])
-	//
-	//spaceClient := http.Client{
-	//	Timeout: time.Second * 2, // Maximum of 2 secs
-	//}
-	//
-	//req, err := http.NewRequest(http.MethodGet, url, nil)
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
-	//
-	//req.Header.Set("User-Agent", "spacecount-tutorial")
-	//
-	//res, getErr := spaceClient.Do(req)
-	//if getErr != nil {
-	//	log.Fatal(getErr)
-	//}
-	//
-	//body, readErr := ioutil.ReadAll(res.Body)
-	//if readErr != nil {
-	//	log.Fatal(readErr)
-	//}
+//spaceClient := http.Client{
+//	Timeout: time.Second * 2, // Maximum of 2 secs
+//}
+//
+//req, err := http.NewRequest(http.MethodGet, url, nil)
+//if err != nil {
+//	log.Fatal(err)
+//}
+//
+//req.Header.Set("User-Agent", "spacecount-tutorial")
+//
+//res, getErr := spaceClient.Do(req)
+//if getErr != nil {
+//	log.Fatal(getErr)
+//}
+//
+//body, readErr := ioutil.ReadAll(res.Body)
+//if readErr != nil {
+//	log.Fatal(readErr)
+//}
 
-	//people1 := people{}
-	//jsonErr := json.Unmarshal(body, &people1)
-	//if jsonErr != nil {
-	//	log.Fatal(jsonErr)
-	//}
-	//
-	//gopre.Pre(people1.Number)
-}
+//people1 := people{}
+//jsonErr := json.Unmarshal(body, &people1)
+//if jsonErr != nil {
+//	log.Fatal(jsonErr)
+//}
+//
+//gopre.Pre(people1.Number)
+//}
+
 func (operation *JsonOperation) getJson(data []byte, myType interface{}) map[string]interface{} {
 	inType := myType
 	jsonErr := json.Unmarshal(data, &inType)
+
 	if jsonErr != nil {
 		log.Fatal(jsonErr)
 	}
 	operation.convertedJsonFile = inType
+	//gopre.Pre(operation.convertedJsonFile)
 	return inType.(map[string]interface{})
 }
 func (operation *JsonOperation) getJsonStruct(autoGoPre ... bool) interface{} {
@@ -122,21 +120,28 @@ func (operation *JsonOperation) getFileToInternet(url ... string) []byte {
 
 	httpRequest, err := http.NewRequest(http.MethodGet, _url, nil)
 	if err != nil {
+
 		log.Fatal(err)
+
 	}
 
 	httpResponse, getErr := httpOperation.Do(httpRequest)
 	if getErr != nil {
+
 		log.Fatal("URL eklenmemis \n", getErr)
+		//Get https://raw.githubusercontent.com/weppos/whois/master/data/tld.json: net/http: request canceled (Client.Timeout exceeded while awaiting headers)
+
 	}
 
 	body, readErr := ioutil.ReadAll(httpResponse.Body)
 	if readErr != nil {
+
+		//2018/06/29 03:12:27 net/http: request canceled (Client.Timeout exceeded while reading body)
 		log.Fatal(readErr)
 	}
 
 	io := IoController{}
-	io.setFolderPath("downloaded")
+	io.setFolderPath("downloaded/")
 	io.setFileName("astros.json")
 	io.openLogFile(false)
 	io.appendByte(body)

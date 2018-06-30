@@ -11,30 +11,24 @@ import (
 //	folderList []string
 //}
 
-//func (fs filesScanner) HaydiScan() int {
-//	var scanCount = 0
-//
-//	for _, scanRow := range fs.folderList {
-//		t := strings.TrimSpace(scanRow)
-//		e := strings.HasSuffix(t, ".txt")
-//		if e == true {
-//			scanCount++
-//		}
-//
-//	}
-//
-//	return scanCount
-//}
+
+func DomainCheck(e string) bool {
+
+	if !strings.ContainsAny(e, "@?") && strings.ContainsAny(e, ".") &&
+		!strings.HasPrefix(e, ".") && !strings.HasSuffix(e, ".") &&
+		!strings.ContainsAny(e, "\t") && strings.Count(e, " ") == 0 {
+		return true
+	}
+	return false
+}
 
 type FileCheckandScan struct {
 	//extension strings
 	path string
 }
 
-//
 func (fc FileCheckandScan) ExtensionControlAndScan(txtNames []string) []string {
-	//fmt.Println("=========ssssss",txtNames)
-	//[domains.txt test.txt]
+
 	var returnVal = []string{}
 
 	for _, txtName := range txtNames {
@@ -72,7 +66,10 @@ func (fc FileCheckandScan) txtScanner(val string) []string {
 		for _, c := range a {
 
 			e := strings.TrimSpace(c)
-			if !strings.ContainsAny(e, "@?") && strings.ContainsAny(e, ".") && !strings.HasPrefix(e, ".") {
+
+			if DomainCheck(e) == true {
+				//UGUR ABIYE SOR BIR BOSLUK VARSA ARAYA \t KOYUYO NEDENINI ANLAMADIM
+				//fmt.Println("=====", e)
 				returnVal = append(returnVal, e)
 
 			}
@@ -83,3 +80,18 @@ func (fc FileCheckandScan) txtScanner(val string) []string {
 	return returnVal
 
 }
+
+//func (fs filesScanner) HaydiScan() int {
+//	var scanCount = 0
+//
+//	for _, scanRow := range fs.folderList {
+//		t := strings.TrimSpace(scanRow)
+//		e := strings.HasSuffix(t, ".txt")
+//		if e == true {
+//			scanCount++
+//		}
+//
+//	}
+//
+//	return scanCount
+//}
