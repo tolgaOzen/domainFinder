@@ -1,16 +1,16 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 var inputFolderPath string
 var outputFolderPath string
 var standartPath string
 
 func main() {
-
 	flagInitialize()
+	realMain()
+}
+func realMain() {
 
 	returnIsFolder := checkInputOutputFolder()
 	//fmt.Println(returnIsFolder)

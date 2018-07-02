@@ -10,18 +10,22 @@ Thumbs.db
 # vi
 *~
 
-# General
+# Folders
 input/
 output/
+log/
+downloaded/
+
+# General
 *.log
+
 # Binaries for programs and plugins
 *.exe
 *.exe~
 *.dll
 *.so
 *.dylib
-log/
-downloaded/
+
 
 # Test binary, build with `go test -c`
 *.test

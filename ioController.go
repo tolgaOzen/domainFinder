@@ -18,9 +18,9 @@ type IoController struct {
 	fileName    string
 }
 
-const (
-	sleep = time.Second * 5
-)
+//const (
+//	sleep = 30e9
+//)
 
 //ugur
 
@@ -157,15 +157,33 @@ func (io IoController) CreateTestFile(val string, folderName string, fileName st
 		//returnVal = true
 
 	} else {
+		a := broChannel{}
+
 		fmt.Println("lutfen " + folderName + " folderiniza domainlerin yazili oldugu bir dosya yerlestiriniz")
 
-		time.Sleep(sleep)
+		exit := false
 
-		PathOkLogContol()
+		for exit == false {
+
+			a.inito()
+
+			if a.inito() == false {
+
+				fmt.Print(".")
+
+			}
+
+			if a.inito() == true {
+
+				exit = true
+
+			}
+		}
 
 		fmt.Println("tesekkurler... tarama basliyor")
-		//returnVal = false
+
 	}
+
 	//return returnVal
 }
 
@@ -205,7 +223,7 @@ func PathOkLogContol() []string {
 	folderPathFiller()
 
 	FolderControl, _ := ioa.GetFolderList(inputFolderPath)
-
+	//gopre.Pre(FolderControl)
 	Foldercheck := 0
 
 	for _, inputcheck := range FolderControl {
