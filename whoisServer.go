@@ -2,10 +2,10 @@ package main
 
 import (
 	"net"
-	"bufio"
 	"strings"
 	"fmt"
 	"github.com/ugurethemaydin/gopre/src/gopre"
+	"bufio"
 )
 
 type whoisServer struct {

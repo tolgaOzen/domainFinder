@@ -42,13 +42,17 @@ func realMain() {
 	fc := FileCheckandScan{inputFolderPath}
 	domains := fc.ExtensionControlAndScan(inputLogNameArray)
 
+	var ExtentionString string
+	fmt.Println("Ozellikle istediginiz bir uzanti varsa giriniz:[ornek: com ] yoksa all yazirniz...")
+	fmt.Scanln(&ExtentionString)
+
 	if CountVal == 50 {
 		fmt.Println("bir Count belirleyiniz:")
 		fmt.Scanln(&CountVal)
 
 	}
 
-	dm := DomainQuest{domains, CountVal}
+	dm := DomainQuest{domains, CountVal, ExtentionString}
 
 	dm.domainQueryAndWrite()
 
