@@ -12,6 +12,7 @@ import (
 //}
 
 
+
 func DomainCheck(e string) bool {
 
 	if !strings.ContainsAny(e, "@?") && strings.ContainsAny(e, ".") &&
@@ -34,6 +35,7 @@ func (fc FileCheckandScan) ExtensionControlAndScan(txtNames []string) []string {
 	for _, txtName := range txtNames {
 
 		txtName = fc.path + "/" + txtName
+
 		b := fc.txtScanner(txtName)
 
 		for _, a := range b {
@@ -58,7 +60,6 @@ func (fc FileCheckandScan) txtScanner(val string) []string {
 	fileScanner := bufio.NewScanner(OpenedFile)
 
 	for fileScanner.Scan() {
-
 		b := fileScanner.Text()
 
 		a := strings.Split(b, " ")
@@ -68,6 +69,7 @@ func (fc FileCheckandScan) txtScanner(val string) []string {
 			e := strings.TrimSpace(c)
 
 			if DomainCheck(e) == true {
+
 				//UGUR ABIYE SOR BIR BOSLUK VARSA ARAYA \t KOYUYO NEDENINI ANLAMADIM
 				//fmt.Println("=====", e)
 				returnVal = append(returnVal, e)
@@ -77,6 +79,7 @@ func (fc FileCheckandScan) txtScanner(val string) []string {
 		}
 
 	}
+	//fmt.Print(numberOfRow)
 	return returnVal
 
 }

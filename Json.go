@@ -128,6 +128,10 @@ func (operation *JsonOperation) getFileToInternet(url ... string) []byte {
 	httpResponse, getErr := httpOperation.Do(httpRequest)
 	if getErr != nil {
 
+
+		//
+
+
 		log.Fatal("URL eklenmemis \n", getErr)
 		//Get https://raw.githubusercontent.com/weppos/whois/master/data/tld.json: net/http: request canceled (Client.Timeout exceeded while awaiting headers)
 

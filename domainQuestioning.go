@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"strings"
+	"fmt"
 )
 
 type DomainQuest struct {
@@ -18,9 +19,11 @@ func (dm DomainQuest) domainQueryAndWrite() {
 	io.openLogFile(true)
 
 	for _, domain := range dm.domains {
+		numberOfRow ++
+		WriteNumberFile(numberOfRow - 1)
 
 		splitDomain := strings.Split(domain, ".")
-
+		//dm.extention == "" ||
 		if dm.extention == "" || dm.extention == "all" {
 			dm.findOkDomain(domain, splitDomain, io)
 			//else if exist == 5 {
@@ -59,6 +62,26 @@ func (dm DomainQuest) findOkDomain(domain string, splitDomain []string, io IoCon
 		}
 
 	}
+
+}
+
+func WriteNumberFile(val int) {
+	io := IoController{}
+
+	io.fileName = "/errList"
+	io.folderName = "errlist"
+	io.openLogFile(false)
+	io.log(fmt.Sprintf("%d\n", val), TAKEN)
+
+}
+
+func WriteStringFile(val string) {
+	io := IoController{}
+
+	io.fileName = "/errList"
+	io.folderName = "errlist"
+	io.openLogFile(false)
+	io.log(val+"\n", TAKEN)
 
 }
 

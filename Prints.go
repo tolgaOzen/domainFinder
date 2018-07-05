@@ -43,8 +43,13 @@ func (write Write) spaceWrite(row string) {
 	SpaceNum := strings.Repeat(" ", SPACENUM-Sum)
 
 	matrix.MPrint(row)
+
+
+
 	fmt.Print(SpaceNum)
+
 	fmt.Print(write.figure + "\n")
 	//matrix.MPrint(write.figure + "\n")
 
 }
+

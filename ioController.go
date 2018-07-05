@@ -24,6 +24,8 @@ type IoController struct {
 
 //ugur
 
+
+
 func (io *IoController) log(val string, figure Figure) {
 	if figure == OK {
 		tn := time.Now()

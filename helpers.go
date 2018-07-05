@@ -5,7 +5,7 @@ import (
 )
 
 var help string
-var CountVal int
+
 
 func flagInitialize() {
 	//var wg = new(sync.WaitGroup)
@@ -23,7 +23,7 @@ func flagInitialize() {
 	//calistigim klasor icerinsinde input ve output klasorleri var mi kontrol et
 }
 
-func checkInputOutputFolder() bool {
+func checkInputOutputFolder() bool  {
 	var returnVal bool = false
 
 	iop := IoController{}
